@@ -23,21 +23,41 @@ Since are using PostsgreSQL, there aren't really SQL editors we can use where ha
 ```
 \dt
 ```
-# Views
+
 Make a file in the sql_deep_dive directory (I'm just calling mine spike.sql). If you do not like running .sql files, feel free to run the scripts in terminal.
+
+# Views
 
 Add the following line in your file:
 
 ```
--- count
+-- sample query
 select title, budget, gross from movies;
 ```
 Then in your psql instance, run the following line:
-
 ```
 \i spike.sql
 ```
-
 You should see the title, budget, and gross of all movies from the table. The "\i" stands for input, if you were curious.
 
-Say we had a query we wanted to use over and over and in different files. For example, what if I found movies
+Say we had a query we wanted to use over and over and in different files. For example, what if I needed to know directors and their movies all the time on my project? 
+```
+select d.name, m.title, m.year
+from movies m
+join directors d
+on m.director_id = d.id;
+```
+
+One way is to make use a subquery and reference that every time, but another way is to make a view.
+
+```
+create or replace view director_titles as
+  select d.id, d.name, m.title, m.year
+  from movies m
+  join directors d
+  on m.director_id = d.id;
+
+select * from director_titles;
+```
+Run the file in psql, and notice how selecting from the view returns everything from the original query. You can mess around with the view by selecting specific columns from the view e.g. name and title.
+
