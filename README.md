@@ -19,26 +19,26 @@ $ psql imdb
 psql> select * from movies where id=100 limit 1;
 100|The Hobbit: An Unexpected Journey |182|303001229|http://www.imdb.com/title/tt0903624/?ref_=fn_tt_tt_1|PG-13|180000000|2012|English|1|2016-12-11 20:52:25.675416|2016-12-11 20:52:25.675416
 ```
-Since are using PostsgreSQL, there aren't really SQL editors we can use where have complete control of our SQL. Therefore, we are going to make some .sql files and run them in our psql instance. During this spike, if you are curious what all the other tables are, run the following in your imdb psql instance:
+During this spike, I will be running sql scripts from a .sql file. If you do not like running .sql files, feel free to run the scripts in terminal. If you are curious what all the other tables are, run the following in your imdb psql instance:
 ```
 \dt
 ```
 
-Make a file in the sql_deep_dive directory (I'm just calling mine spike.sql). If you do not like running .sql files, feel free to run the scripts in terminal.
-
-# Views
-
-Add the following line in your file:
+Make a file in the sql_deep_dive directory (I'm calling mine spike.sql). Add the following line in your file:
 
 ```
 -- sample query
 select title, budget, gross from movies;
 ```
 Then in your psql instance, run the following line:
+
 ```
 \i spike.sql
 ```
+
 You should see the title, budget, and gross of all movies from the table. The "\i" stands for input, if you were curious.
+
+# Views
 
 Say we had a query we wanted to use over and over and in different files. For example, what if I needed to know directors and their movies all the time on my project? 
 ```
