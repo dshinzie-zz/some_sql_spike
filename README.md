@@ -1,5 +1,5 @@
 # Intro
-This spike is going to be a little introduction to some more intermediate concepts in SQL. We're going to use a lesson from Mod 4 Backend to setup our database and have some data ready to go. If you would like to go through the other lesson on your own, go to the following lesson plan:
+This spike is going to be a little introduction to some more-than-intermediate-but-not-quite-advanced concepts in SQL. We're going to use a lesson from Mod 4 Backend to setup our database and have some data ready to go. If you would like to go through the other lesson on your own, go to the following lesson plan:
 
 http://backend.turing.io/module4/lessons/sql_deep_dive
 
