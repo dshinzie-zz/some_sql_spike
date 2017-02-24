@@ -115,7 +115,34 @@ Let's look at what's going on here.
 * $$ is known as dollar quoting, and this where our "block" begins
 * LANGUAGE SQL means we are going to use SQL (it's weird, we can use other languages)
 
+Let's write a simple math SQL function.
+```
+CREATE OR REPLACE FUNCTION add_stuff(integer, integer) RETURNS integer AS $$
+    SELECT $1 + $2;
+$$ LANGUAGE SQL;
+```
+Notice here we reference each parameter with a dollar sign. PostgreSQL loves dollar signs. I suppose we all love dollar signs.
 
+Try running the function with various inputs. 
+```
+SELECT add_stuff(30, 20);
+```
 
+Let's make a function more relative to our data. What if we wanted to make a function that could update our movie title?
 
+```
+CREATE OR REPLACE FUNCTION update_movie(id integer, new_title varchar) RETURNS void AS
+$$
+    UPDATE movies
+    SET title = $2
+    WHERE ID = $1;
+$$ LANGUAGE SQL;
+```
 
+In this example, we are creating a function that will take in a integer and a string (called varchar in SQL) that will return nothing (void). If you run a query, update the movie, then run the same query, do you notice that the data has changed?
+
+```
+select title from movies where id = 1;
+SELECT update_movie(1, 'new title');
+select title from movies where id = 1;
+```
