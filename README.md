@@ -52,7 +52,7 @@ One way is to make use a subquery and reference that every time, but another way
 
 ```
 create or replace view director_titles as
-  select d.id, d.name, m.title, m.year
+  select d.name, m.title, m.year, m.id as movie_id
   from movies m
   join directors d
   on m.director_id = d.id;
@@ -60,4 +60,21 @@ create or replace view director_titles as
 select * from director_titles;
 ```
 Run the file in psql, and notice how selecting from the view returns everything from the original query. You can mess around with the view by selecting specific columns from the view e.g. name and title.
+
+Still not impressed? Imagine we have a situation where we have this query we use all the time, but now we need to join the view to another table. Possible? 
+
+```
+select dt.*, g.name as genre_name
+from director_titles dt
+join genre_memberships gm
+on dt.movie_id = gm.movie_id
+join genres g
+on gm.genre_id = g.id;
+```
+What's happening here? The view still contains all the columns from our original query, including movies.id aliased as movie_id. Since we have the movie id, we can join to genre_memberships and again to genres in order to pull out the genre name. 
+
+In this example, you may think it's a little convoluted and unnecessary to use a view since you can just use the original query. However, when a subquery becomes 10-20 lines long with multiple tables joined, you don't want to rewrite that every time. 
+
+
+
 
